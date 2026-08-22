@@ -10,7 +10,7 @@
         public bool Ativo { get; set; } = true;
         public DateTime DataCadastro { get; set; } = DateTime.Now;
         public ICollection<Rua> Ruas { get; set; } 
-            = new List<Rua>();>
+            = new List<Rua>();
 
 
     }
