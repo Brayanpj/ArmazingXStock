@@ -13,15 +13,8 @@
 
 
     };
-     var produto = new Produto
-    {
-        SKU = "NB-LNV-001",
-        Nome = "Notebook Lenovo Ideadpad",
-        TipoProdutoId = 1, 
-        EstoqueMinimo = 10,
-        Ativo=true,
-        DataCadastro = DateTime.Now
-    };
+    
+
 
 
     }
