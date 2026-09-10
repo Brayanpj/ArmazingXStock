@@ -3,8 +3,8 @@
     public class TipoProduto
     { 
         public int Id { get; set; } 
-        public string Nome { get; set; } = string.Empty;
-        public string? Descricao { get; set; } 
+        public string Nome { get; set; } = string.Empty; 
+        public string Descricao { get; set; } = string.Empty;
 
         //chave estrangeira que referencia Categoria
         public int CategoriaId { get; set; }

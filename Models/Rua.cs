@@ -11,6 +11,8 @@
         public ICollection<Modulo> Modulos { get; set; }
             = new List<Modulo>(); // Relacionamento 1:N com Modulo.
 
+        public DateTime DataCadastro { get; set; } = DateTime.Now;
+
 
 
 

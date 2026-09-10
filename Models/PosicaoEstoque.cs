@@ -12,7 +12,7 @@ namespace ArmazingXStock.Api.Models
 
         public int ProdutoId { get; set; } 
 
-        public int Quantidade { get; set; }
+        public int Quantidade { get; set; } // não aceita null
 
         // Propriedade de navegação para Endereco
         public Endereco Endereco { get; set; } = null!;

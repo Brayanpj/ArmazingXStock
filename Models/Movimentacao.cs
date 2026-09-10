@@ -5,13 +5,16 @@
         // Chave primária da tabela Movimentacao.
         public int Id { get; set; } 
 
-        // Chave estrangeira para a tabela PosicaoEstoque
-        public int PosicaoEstoqueId { get; set; } 
+        public int? PosicaoOrigemId { get; set; } // Chave estrangeira para a tabela PosicaoEstoque de origem (opcional). 
+       
+        public int? PosicaoDestinoId { get; set; } // Chave estrangeira para a tabela PosicaoEstoque de destino (opcional).
+
+        public PosicaoEstoque? PosicaoOrigem { get; set; } // Propriedade de navegação para PosicaoEstoque de origem (opcional).
 
         // Propriedade de navegação para PosicaoEstoque. 
-        public PosicaoEstoque PosicaoEstoque { get; set; } = null!;
+        public PosicaoEstoque? PosicaoDestino { get; set; }
 
-        // Tipo de movimentação (entrada ou saída).
+        // Tipo de movimentação (entrada,saída ou transferêmcia).
         public TipoMovimentacao TipoMovimentacao { get; set; } 
 
         public int QuantidadeMovimentada { get; set; }
