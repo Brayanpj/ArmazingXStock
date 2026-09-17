@@ -7,7 +7,9 @@ var builder = WebApplication.CreateBuilder(args); // a aplicação está sendo c
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(); 
+
+builder.Services.AddSwaggerGen();// Adiciona o serviço Swagger para geração de documentação da API.
 
 var connectionString =
     builder.Configuration.GetConnectionString("DefaultConnection")
@@ -25,6 +27,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+
+    // Adiciona o middleware Swagger para gerar a documentação da API em tempo de execução.
+    app.UseSwagger();
+
+    // Adiciona o middleware Swagger UI para fornecer uma interface web interativa para explorar a documentação da API.
+    app.UseSwaggerUI(); 
 }
 
 app.UseHttpsRedirection();

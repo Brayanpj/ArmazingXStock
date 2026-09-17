@@ -314,6 +314,7 @@ namespace ArmazingXStock.Api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PosicoesEstoque", x => x.Id);
+                    table.PrimaryKey("PK_PosicoesEstoque", x => x.Id);
                     table.CheckConstraint("CK_PosicaoEstoque_Quantidade_NonNegative", "Quantidade >= 0");
                     table.ForeignKey(
                         name: "FK_PosicoesEstoque_Enderecos_EnderecoId",
