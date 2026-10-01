@@ -18,7 +18,7 @@ namespace ArmazingXStock.Api.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet()]
         public IActionResult GetCategorias()
         {   // Busca todas as categorias no banco e armazena o resultado na variável categorias.
             var categorias = _context.Categorias.ToList();
@@ -59,10 +59,16 @@ namespace ArmazingXStock.Api.Controllers
             {
                 return BadRequest();
             }
+
+            if (categoria == null)
+            {
+                return NotFound();
+            }
             // Marca a categoria como modificada no contexto do banco de dados, indicando que ela deve ser atualizada.
             _context.Entry(categoria).State = EntityState.Modified; 
             await _context.SaveChangesAsync();
 
+            //A atualização foi concluída, mas não vou enviar um corpo de resposta.
             return NoContent();
         }
 
