@@ -1,5 +1,6 @@
 ﻿using ArmazingXStock.Api.Data;
 using ArmazingXStock.Api.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,14 +43,21 @@ namespace ArmazingXStock.Api.Controllers
                 return BadRequest("Os dados do Produto são obrigatórios.");
             }
             var tipoProduto = await _context.TiposProdutos
-                .FindAsync(produto.TipoProdutoId);  //verifica se o tipo de produto existe no banco de dados
+                .FindAsync(produto.TipoProdutoId);  //verifica se o tipo de produto existe no banco de dados 
+           
             if (tipoProduto == null)
             {
                 return BadRequest("Tipo de Produto não encontrado.");
             }
+
+            string prefixo = tipoProduto.PrefixoSku;
+
+            return Ok(prefixo);
+           
             _context.Produtos.Add(produto);//adiciona o produto ao contexto do banco de dados
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetProduto), new { id = produto.Id }, produto);
+            
         }
         
         [HttpPut("{id}")] //método para atualizar um produto existente
