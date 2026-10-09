@@ -6,7 +6,7 @@
         public string Nome { get; set; } = string.Empty; 
         public string Descricao { get; set; } = string.Empty; 
 
-        public string PrefixoSku { get; set; } = string.Empty; // Prefixo do SKU para o TipoProduto
+        public string PrefixoSKU { get; set; } = string.Empty; // Prefixo do SKU para o TipoProduto
 
         //chave estrangeira que referencia Categoria
         public int CategoriaId { get; set; }

@@ -55,6 +55,45 @@ namespace ArmazingXStock.Api.Controllers
             {
                 return BadRequest("Categoria não encontrada.");
             }
+            // Gera automaticamente o PrefixoSKU
+            string nomeTipoProduto = tipoProduto.Nome
+                .Trim()
+                .ToUpper();
+          
+           
+            int tamanhoNome = nomeTipoProduto.Length;
+            string[] palavras = nomeTipoProduto.Split(' ');
+
+
+             if(nomeTipoProduto.Length < 4)
+            {
+                return BadRequest("O nome do TipoProduto deve ter no mínimo 4 caracteres.");
+            }
+
+            else if (palavras.Length > 1) 
+            {
+                if (palavras[0].Length < 4)
+                {
+                    return BadRequest("O nome do TipoProduto deve ter no mínimo 4 caracteres na primeira palavra.");
+                } 
+
+                tipoProduto.PrefixoSKU = palavras[0].Substring(0, 4) + palavras[1].Substring(0, Math.Min(1, palavras[1].Length));
+            }
+
+            else if(tamanhoNome >= 7)
+            {
+                tipoProduto.PrefixoSKU = palavras[0].Substring(0, Math.Min(5, palavras[0].Length));
+            }
+
+            else if(nomeTipoProduto.Length >= 4 && nomeTipoProduto.Length <= 6)
+            {
+                tipoProduto.PrefixoSKU = nomeTipoProduto;
+            }
+         
+            //tipoProduto.PrefixoSKU = prefixo.Length >= 6
+            //    ? prefixo.Substring(0, 6)
+            //    : prefixo;
+
 
             _context.TiposProdutos.Add(tipoProduto);
 
@@ -68,7 +107,8 @@ namespace ArmazingXStock.Api.Controllers
             tipoProduto.Id,
             tipoProduto.Nome,
             tipoProduto.Descricao,
-            tipoProduto.CategoriaId
+            tipoProduto.CategoriaId, 
+            tipoProduto.PrefixoSKU,
             });
         }
 

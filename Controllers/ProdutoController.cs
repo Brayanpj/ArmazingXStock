@@ -50,7 +50,7 @@ namespace ArmazingXStock.Api.Controllers
                 return BadRequest("Tipo de Produto não encontrado.");
             }
 
-            string prefixo = tipoProduto.PrefixoSku;
+            string prefixo = tipoProduto.PrefixoSKU;
 
             return Ok(prefixo);
            
