@@ -26,7 +26,7 @@ namespace ArmazingXStock.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProduto(int id)
         {
-            var produto = await _context.Produtos.ToListAsync();
+            var produto = await _context.Produtos.FindAsync();
            
             if (produto == null)
             {
@@ -50,16 +50,48 @@ namespace ArmazingXStock.Api.Controllers
                 return BadRequest("Tipo de Produto não encontrado.");
             }
 
-            string prefixo = tipoProduto.PrefixoSKU;
+            string prefixo = tipoProduto.PrefixoSKU.Trim().ToUpperInvariant();
 
-            return Ok(prefixo);
-           
+            if (string.IsNullOrWhiteSpace(prefixo))
+            {
+                return BadRequest("O Tipo de Produto não possui um prefixo SKU válido.");
+            }
+
+            var skusExistentes = await _context.Produtos //consulta os SKUs existentes no banco de dados
+            .Where(p => p.SKU.StartsWith(prefixo) //procura os SKUs que começam com o prefixo desejado.
+            && p.SKU.Length == prefixo.Length + 4)
+            .Select(p => p.SKU)
+            .ToListAsync(); 
+
+            int maiorSequencia = 0;
+
+            foreach (string skuExistente in skusExistentes)
+            {
+                string parteNumerica = skuExistente.Substring(prefixo.Length);
+
+                if (int.TryParse(parteNumerica, out int numero)
+                    && numero > maiorSequencia)
+                {
+                    maiorSequencia = numero;
+                }
+            }
+
+            if (maiorSequencia >= 9999)
+            {
+                return BadRequest("A sequência de SKUs deste prefixo foi esgotada.");
+            }
+
+            int proximaSequencia = maiorSequencia + 1;
+
+            produto.SKU = $"{prefixo}{proximaSequencia:D4}";
+
+
+
             _context.Produtos.Add(produto);//adiciona o produto ao contexto do banco de dados
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetProduto), new { id = produto.Id }, produto);
-            
+            return Ok (produto);
         }
-        
+
         [HttpPut("{id}")] //método para atualizar um produto existente
           public async Task<IActionResult> UpdateProduto(int id, [FromBody] Produto produto) //recebe o id do produto a ser atualizado e os dados atualizados do produto
         {
