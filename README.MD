@@ -1,116 +1,114 @@
-# 📦 ArmazingXStock
+# 📦 ArmazingXStock.Api
 
-Sistema de gerenciamento de estoque e endereçamento de armazéns desenvolvido com **C#, .NET, Entity Framework Core e MySQL**.
+API REST para gerenciamento de estoque, desenvolvida com **C#, ASP.NET Core Web API, Entity Framework Core e MySQL**.
+
+O ArmazingXStock é um projeto de portfólio voltado ao desenvolvimento Backend, com foco em modelagem de dados, relacionamentos entre entidades, persistência de informações e implementação de regras de negócio.
 
 ## 🎯 Sobre o projeto
 
-O ArmazingXStock é um projeto desenvolvido para praticar conceitos de desenvolvimento Back-end, modelagem de dados, regras de negócio e gerenciamento de estoque.
+O sistema tem como objetivo apoiar o gerenciamento de produtos e informações relacionadas ao estoque, aplicando conceitos de desenvolvimento de APIs e integração com banco de dados relacional.
 
-O sistema tem como objetivo controlar produtos, fornecedores, posições e movimentações de estoque dentro de uma estrutura hierárquica de armazém.
+O projeto está sendo desenvolvido incrementalmente, priorizando a construção e a evolução do Backend antes da implementação do Frontend.
 
-### 🏭 Estrutura de endereçamento
+## 🛠️ Tecnologias utilizadas
 
-**Armazém → Corredor → Rua → Módulo → Nível → Endereço**
+- **C#**
+- **.NET 10**
+- **ASP.NET Core Web API**
+- **Entity Framework Core**
+- **Pomelo.EntityFrameworkCore.MySql**
+- **MySQL**
+- **Swagger / OpenAPI**
+- **Git e GitHub**
 
-Exemplo de endereço:
+## ⚙️ Funcionalidades e implementações
 
-`NOT01-C01-R01-M01-N01-E01`
-
-## 🛠️ Tecnologias
-
-- C#
-- .NET 10
-- ASP.NET Core Web API
-- Entity Framework Core
-- Pomelo.EntityFrameworkCore.MySql
-- MySQL
-- Git / GitHub
-
-## 🧠 Conceitos aplicados
-
-- Programação Orientada a Objetos
-- Entity Framework Core
-- DbContext
-- Migrations
-- Primary Keys (PK)
-- Foreign Keys (FK)
-- Relacionamentos entre entidades
-- Propriedades de navegação
-- Índices simples e compostos
-- Índices únicos
-- Check Constraints
-- DeleteBehavior.Restrict
-- User Secrets
-- Enums
-- Collections
-
-## 📦 Estrutura de estoque
-
-O estoque é controlado através da entidade `PosicaoEstoque`, que relaciona um produto a um endereço e mantém sua quantidade disponível.
-
-Cada combinação de:
-
-`EnderecoId + ProdutoId`
-
-deve ser única.
-
-## 🔄 Movimentações
-
-O projeto prevê três tipos de movimentação:
-
-- Entrada
-- Saída
-- Transferência
-
-As movimentações utilizam posições de origem e/ou destino de acordo com o tipo da operação.
+- Modelagem de entidades para categorias, tipos de produtos e produtos.
+- Relacionamentos entre entidades por meio de chaves primárias e estrangeiras.
+- Persistência e consulta de dados utilizando Entity Framework Core e MySQL.
+- Desenvolvimento de endpoints para as entidades implementadas.
+- Geração automática de prefixos SKU com base no nome do tipo de produto.
+- Implementação da lógica de geração sequencial de SKU, com prefixo e numeração de quatro dígitos por tipo de produto.
+- Aplicação de regras de negócio e restrições de integridade dos dados.
+- Configuração do Swagger para documentação e exploração dos endpoints da API.
 
 ## 🗄️ Banco de dados
 
-A persistência de dados está configurada utilizando **Entity Framework Core com MySQL**.
+A aplicação utiliza o MySQL para persistência dos dados e o Entity Framework Core para o mapeamento objeto-relacional (ORM).
 
-A Migration inicial:
+A estrutura de dados utiliza relacionamentos entre entidades, chaves estrangeiras e restrições de unicidade para reforçar a integridade das informações.
 
-`InitialCreate`
+A configuração da conexão com o banco utiliza **.NET User Secrets** no ambiente de desenvolvimento, evitando manter credenciais diretamente no código-fonte.
 
-já foi criada e aplicada ao banco de dados.
+## 🚀 Como executar o projeto
 
-Ela é responsável pela criação inicial de:
+### Pré-requisitos
 
-- Tabelas
-- Chaves primárias
-- Chaves estrangeiras
-- Índices
-- Índices únicos
-- Check Constraints
-- Relacionamentos entre as entidades
+- .NET SDK compatível com a versão utilizada no projeto.
+- MySQL Server.
+- Visual Studio ou outra IDE compatível com .NET.
 
-## 🔐 Segurança e configuração
+### Passos
 
-A string de conexão é mantida fora do código-fonte utilizando **.NET User Secrets**, evitando o versionamento de informações sensíveis no Git.
+1. Clone o repositório:
 
-## 🚧 Status do projeto
+   ```bash
+   git clone https://github.com/Brayanpj/ArmazingXStock.Api.git
+   ```
 
-### Concluído
+2. Acesse a pasta do projeto:
 
-- [x] Modelagem inicial das entidades
-- [x] Relacionamentos entre entidades
-- [x] Configuração do Entity Framework Core
-- [x] Configuração do DbContext
-- [x] Integração com MySQL
-- [x] Regras de integridade no banco
-- [x] Migration inicial
-- [x] Criação da estrutura inicial do banco
+   ```bash
+   cd ArmazingXStock.Api
+   ```
 
-### Próximos passos
+3. Configure a conexão com o MySQL utilizando o mecanismo de configuração adotado no projeto.
 
-- [ ] Implementação dos CRUDs
-- [ ] Criação dos Controllers
-- [ ] Criação dos endpoints da API
-- [ ] Validação das regras de movimentação de estoque
-- [ ] Testes dos endpoints
-- [ ] Documentação da API
-- [ ] Desenvolvimento do front-end
+4. Execute a aplicação:
 
-## 🎯 Objetivo
+   ```bash
+   dotnet run
+   ```
 
-Projeto desenvolvido para estudo, prática e aprimoramento em desenvolvimento Back-end com **C# e .NET**, aplicando conceitos utilizados em aplicações reais.
+5. Acesse a interface do Swagger pela URL exibida no terminal, caso esteja habilitada no ambiente de execução.
+
+> **Observação:** a configuração do banco de dados e os comandos de inicialização devem corresponder à versão atual do projeto.
+
+📌 Status do projeto
+
+Em desenvolvimento — MVP Backend.
+
+O foco atual está na evolução da API, nas regras de negócio relacionadas aos produtos e na validação das operações implementadas.
+
+Próximas etapas
+
+Consolidar e validar as operações CRUD.
+
+Aprimorar as validações e o tratamento de erros.
+
+Evoluir o gerenciamento de estoque e fornecedores.
+
+Implementar movimentações e endereçamento de armazém.
+
+Desenvolver o Frontend para consumir a API.
+
+Ampliar os testes e a documentação técnica.
+
+### Próximas etapas
+
+- Consolidar e validar as operações CRUD.
+- Aprimorar as validações e o tratamento de erros.
+- Evoluir o gerenciamento de estoque e fornecedores.
+- Implementar movimentações e endereçamento de armazém.
+- Desenvolver o Frontend para consumir a API.
+- Ampliar os testes e a documentação técnica.
+
+## 🎯 Objetivo profissional
+
+Projeto desenvolvido para consolidar e demonstrar conhecimentos em **desenvolvimento Backend com C# e .NET**, incluindo APIs REST, persistência de dados, modelagem relacional e implementação de regras de negócio.
+
+---
+
+Desenvolvido por **Brayan Prates Jardim**.
+
+[GitHub](https://github.com/Brayanpj)
