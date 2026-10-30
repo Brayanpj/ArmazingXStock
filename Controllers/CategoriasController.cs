@@ -50,25 +50,31 @@ namespace ArmazingXStock.Api.Controllers
             return CreatedAtAction(nameof(GetCategoria), new { id = categoria.Id }, categoria);
         }
 
-        [HttpPut("{id}")]
-        // Recebe uma categoria atualizada no corpo da requisição HTTP e atualiza a categoria existente no banco de dados com o ID especificado.
-        public async Task<IActionResult> UpdateCategoria(int id, [FromBody] Categoria categoria)
-      
+       [HttpPut("{id}")]
+       public async Task<IActionResult> UpdateCategoria(int id, [FromBody] Categoria categoria)
         {
-            if (id != categoria.Id)
+            if (categoria == null) // valida o objeto recebido
             {
                 return BadRequest();
             }
 
-            if (categoria == null)
+            if (id != categoria.Id) // valida o corpo da requisição
+            {
+                return BadRequest();
+            }
+
+            var categoriaExistente = await _context.Categorias.FindAsync(id);
+
+            if (categoriaExistente == null)
             {
                 return NotFound();
             }
-            // Marca a categoria como modificada no contexto do banco de dados, indicando que ela deve ser atualizada.
-            _context.Entry(categoria).State = EntityState.Modified; 
+
+            categoriaExistente.Nome = categoria.Nome;
+            categoriaExistente.Descricao = categoria.Descricao;
+
             await _context.SaveChangesAsync();
 
-            //A atualização foi concluída, mas não vou enviar um corpo de resposta.
             return NoContent();
         }
 

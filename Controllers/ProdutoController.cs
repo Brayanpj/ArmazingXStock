@@ -26,12 +26,13 @@ namespace ArmazingXStock.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProduto(int id)
         {
-            var produto = await _context.Produtos.FindAsync();
-           
+            var produto = await _context.Produtos.FindAsync(id); //verifica se o produto existe no banco de dados
+
+
             if (produto == null)
             {
                 return NotFound();
-            }
+            } 
             return Ok(produto);
         }
         
@@ -50,12 +51,12 @@ namespace ArmazingXStock.Api.Controllers
                 return BadRequest("Tipo de Produto não encontrado.");
             }
 
-            string prefixo = tipoProduto.PrefixoSKU.Trim().ToUpperInvariant();
-
-            if (string.IsNullOrWhiteSpace(prefixo))
+            if (string.IsNullOrWhiteSpace(tipoProduto.PrefixoSKU))
             {
                 return BadRequest("O Tipo de Produto não possui um prefixo SKU válido.");
             }
+            
+            string prefixo = tipoProduto.PrefixoSKU.Trim().ToUpperInvariant();
 
             var skusExistentes = await _context.Produtos //consulta os SKUs existentes no banco de dados
             .Where(p => p.SKU.StartsWith(prefixo) //procura os SKUs que começam com o prefixo desejado.
@@ -89,7 +90,15 @@ namespace ArmazingXStock.Api.Controllers
 
             _context.Produtos.Add(produto);//adiciona o produto ao contexto do banco de dados
             await _context.SaveChangesAsync();
-            return Ok (produto);
+
+            //retorna um status code 201 (Created) indicando que o produto foi criado com sucesso
+            return CreatedAtAction(
+            //retorna o método GetProduto para que o cliente possa obter os detalhes do produto recém-criado
+                nameof(GetProduto),
+                new { id = produto.Id }, //retorna o id do produto recém-criado
+                produto //retorna o produto recém-criado
+            ); 
+
         }
 
         [HttpPut("{id}")] //método para atualizar um produto existente
@@ -100,7 +109,8 @@ namespace ArmazingXStock.Api.Controllers
                   return BadRequest("Os dados do Produto são obrigatórios.");
               }
 
-              var produtoExistente = await _context.Produtos.FindAsync(id);//verifica se o produto existe no banco de dados
+              var produtoExistente = await _context.Produtos.FindAsync(id);//verifica se o produto existe no banco de dados 
+              
             
             if (produtoExistente == null)
               {
@@ -110,6 +120,9 @@ namespace ArmazingXStock.Api.Controllers
               // Atualiza as propriedades do produto existente
               produtoExistente.Nome = produto.Nome;
               produtoExistente.TipoProdutoId = produto.TipoProdutoId;
+              produtoExistente.Descricao = produto.Descricao;
+              produtoExistente.PrecoVenda = produto.PrecoVenda; 
+
 
               await _context.SaveChangesAsync();
               return Ok(produtoExistente);
