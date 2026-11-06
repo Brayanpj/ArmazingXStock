@@ -90,6 +90,10 @@ namespace ArmazingXStock.Api.Data
                 .HasForeignKey(pf => pf.FornecedorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<ProdutoFornecedor>()
+                .Property(pf => pf.PrecoCompra)
+                .HasPrecision(10, 2); //define a precisão do campo PrecoCompra como 10 dígitos no total, sendo 2 dígitos após a vírgula decimal.
+
             modelBuilder.Entity<Fornecedor>()
                 .HasIndex(f => f.CNPJ)
                 .IsUnique(); // Impede que o mesmo fornecedor seja cadastrado mais de uma vez com o mesmo CNPJ.

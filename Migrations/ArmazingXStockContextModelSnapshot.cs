@@ -388,6 +388,9 @@ namespace ArmazingXStock.Api.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
 
+                    b.Property<decimal>("PrecoVenda")
+                        .HasColumnType("decimal(65,30)");
+
                     b.Property<string>("SKU")
                         .IsRequired()
                         .HasMaxLength(8)
@@ -427,6 +430,10 @@ namespace ArmazingXStock.Api.Migrations
 
                     b.Property<int>("FornecedorId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("PrecoCompra")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<int>("ProdutoId")
                         .HasColumnType("int");
@@ -508,6 +515,10 @@ namespace ArmazingXStock.Api.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
+
+                    b.Property<string>("PrefixoSKU")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 

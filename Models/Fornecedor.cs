@@ -18,7 +18,7 @@
 
         public bool Ativo { get; set; } = true; 
 
-        public ICollection<ProdutoFornecedor> ProdutosFornecedores { get; set; } = new List<ProdutoFornecedor>();
+        public ICollection<ProdutoFornecedor> ProdutosFornecedores { get; set; } = new List<ProdutoFornecedor>(); // Propriedade de navegação para a relação muitos-para-muitos com ProdutoFornecedor.
 
         public DateTime DataCadastro { get; set; } = DateTime.Now;
     }
