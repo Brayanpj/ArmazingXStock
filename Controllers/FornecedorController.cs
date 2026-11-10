@@ -9,7 +9,7 @@ namespace ArmazingXStock.Api.Controllers
 
     [ApiController]
     [Route("api/[controller]")]    
-    public class FornecedorController : Controller
+    public class FornecedorController : ControllerBase
     {
         private readonly ArmazingXStockContext _context;
 
