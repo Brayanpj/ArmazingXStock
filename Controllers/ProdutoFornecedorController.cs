@@ -1,6 +1,7 @@
 ﻿using ArmazingXStock.Api.Data;
 using ArmazingXStock.Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace ArmazingXStock.Api.Controllers
 {
@@ -33,12 +34,32 @@ namespace ArmazingXStock.Api.Controllers
             return Ok(produtoFornecedor);
         }
 
-        [HttpPost]
-        public IActionResult CreateProdutoFornecedor([FromBody] ProdutoFornecedor produtoFornecedor)
+        [HttpPost("{ProdutoId}")]
+        public IActionResult CreateProdutoFornecedor(int ProdutoId, [FromBody] ProdutoFornecedor produtoFornecedor)
         {
+            produtoFornecedor.ProdutoId = ProdutoId; // Recebe o ProdutoId pela rota, e transfere o valor para entidade produtoFornecedor.
             _context.ProdutosFornecedores.Add(produtoFornecedor);
             _context.SaveChanges();
             return CreatedAtAction(nameof(GetProdutoFornecedor), new { produtoFornecedor.ProdutoId, FornecedorId = produtoFornecedor.FornecedorId }, produtoFornecedor);
+        }
+
+        [HttpPut("{ProdutoId}/{FornecedorId}")]
+        public IActionResult UpdateProdutoFornecedor(int ProdutoId, int FornecedorId, [FromBody] ProdutoFornecedor produtoFornecedor)
+        {
+            var existingProdutoFornecedor = _context.ProdutosFornecedores.FirstOrDefault(p => p.ProdutoId == ProdutoId && p.FornecedorId == FornecedorId);
+            
+            
+            if (existingProdutoFornecedor == null)
+            {
+                return NotFound();
+            }
+            
+            existingProdutoFornecedor.FornecedorId = produtoFornecedor.FornecedorId; 
+            existingProdutoFornecedor.ProdutoId = produtoFornecedor.ProdutoId;
+            // Atualize outros campos conforme necessário
+
+            _context.SaveChanges();
+            return Ok(existingProdutoFornecedor);
         }
 
     }
