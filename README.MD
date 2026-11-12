@@ -23,12 +23,15 @@ O projeto está sendo desenvolvido incrementalmente, priorizando a construção 
 
 ## ⚙️ Funcionalidades e implementações
 
-- Modelagem de entidades para categorias, tipos de produtos e produtos.
+- Modelagem de entidades para categorias, tipos de produtos, produtos e fornecedores.
 - Relacionamentos entre entidades por meio de chaves primárias e estrangeiras.
+- Associação entre produtos e fornecedores, permitindo múltiplos fornecedores para um mesmo produto.
+- Cadastro e atualização do preço de compra por associação entre produto e fornecedor.
+- Controle de ativação e desativação das associações entre produtos e fornecedores por meio de exclusão lógica.
 - Persistência e consulta de dados utilizando Entity Framework Core e MySQL.
-- Desenvolvimento de endpoints para as entidades implementadas.
+- Implementação de operações CRUD para as entidades desenvolvidas.
 - Geração automática de prefixos SKU com base no nome do tipo de produto.
-- Implementação da lógica de geração sequencial de SKU, com prefixo e numeração de quatro dígitos por tipo de produto.
+- Geração sequencial de SKU, com prefixo e numeração de quatro dígitos por tipo de produto.
 - Aplicação de regras de negócio e restrições de integridade dos dados.
 - Configuração do Swagger para documentação e exploração dos endpoints da API.
 
@@ -74,31 +77,18 @@ A configuração da conexão com o banco utiliza **.NET User Secrets** no ambien
 
 > **Observação:** a configuração do banco de dados e os comandos de inicialização devem corresponder à versão atual do projeto.
 
-📌 Status do projeto
+## 📌 Status do projeto
 
-Em desenvolvimento — MVP Backend.
+**Em desenvolvimento — MVP Backend.**
 
-O foco atual está na evolução da API, nas regras de negócio relacionadas aos produtos e na validação das operações implementadas.
+O Backend já possui operações CRUD implementadas e validadas para categorias, tipos de produtos, produtos, fornecedores e associações entre produtos e fornecedores.
 
-Próximas etapas
+O foco atual está na evolução da API, no aprimoramento das regras de negócio e na implementação das funcionalidades de gerenciamento de estoque.
 
-Consolidar e validar as operações CRUD.
+## 📋 Próximas etapas
 
-Aprimorar as validações e o tratamento de erros.
-
-Evoluir o gerenciamento de estoque e fornecedores.
-
-Implementar movimentações e endereçamento de armazém.
-
-Desenvolver o Frontend para consumir a API.
-
-Ampliar os testes e a documentação técnica.
-
-### Próximas etapas
-
-- Consolidar e validar as operações CRUD.
 - Aprimorar as validações e o tratamento de erros.
-- Evoluir o gerenciamento de estoque e fornecedores.
+- Evoluir o gerenciamento de estoque.
 - Implementar movimentações e endereçamento de armazém.
 - Desenvolver o Frontend para consumir a API.
 - Ampliar os testes e a documentação técnica.

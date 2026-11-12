@@ -46,20 +46,34 @@ namespace ArmazingXStock.Api.Controllers
         [HttpPut("{ProdutoId}/{FornecedorId}")]
         public IActionResult UpdateProdutoFornecedor(int ProdutoId, int FornecedorId, [FromBody] ProdutoFornecedor produtoFornecedor)
         {
-            var existingProdutoFornecedor = _context.ProdutosFornecedores.FirstOrDefault(p => p.ProdutoId == ProdutoId && p.FornecedorId == FornecedorId);
-            
-            
+            var existingProdutoFornecedor = _context.ProdutosFornecedores.FirstOrDefault(p => p.ProdutoId == ProdutoId && p.FornecedorId == FornecedorId); // para atualizar, primeiro é necessário buscar o registro existente no banco de dados com base no ProdutoId e FornecedorId fornecidos na rota.
+
+
             if (existingProdutoFornecedor == null)
             {
                 return NotFound();
             }
-            
-            existingProdutoFornecedor.FornecedorId = produtoFornecedor.FornecedorId; 
-            existingProdutoFornecedor.ProdutoId = produtoFornecedor.ProdutoId;
-            // Atualize outros campos conforme necessário
 
+            existingProdutoFornecedor.PrecoCompra = produtoFornecedor.PrecoCompra;
+            existingProdutoFornecedor.Ativo = produtoFornecedor.Ativo; 
             _context.SaveChanges();
             return Ok(existingProdutoFornecedor);
+        }
+
+        [HttpDelete("{ProdutoId}/{FornecedorId}")]
+        public IActionResult DeleteProdutoFornecedor(int ProdutoId, int FornecedorId)
+        {
+            var existingProdutoFornecedor = _context.ProdutosFornecedores.FirstOrDefault(p => p.ProdutoId == ProdutoId &&
+                                                                                         p.FornecedorId == FornecedorId);
+
+            if (existingProdutoFornecedor == null)
+            {
+                return NotFound();
+            }
+
+            existingProdutoFornecedor.Ativo = false;
+            _context.SaveChanges();
+            return NoContent();
         }
 
     }
